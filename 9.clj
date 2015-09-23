@@ -6,12 +6,13 @@
 ;There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 ;Find the product abc.
 
+(defn square [x] (* x x))
 
 ;; Horribly inefficient
 (doseq [a (range 1 1000)
         b (range 2 1001)
         c (range 3 1002)]
-  (if (and (= (+ (square a)(square b))(square c))(= 1000 (+ a b c)))
+  (if (and (= (+ (square a) (square b))
+              (square c))
+           (= 1000 (+ a b c)))
     (println (* a b c))))
-
-(defn square [x] (* x x))

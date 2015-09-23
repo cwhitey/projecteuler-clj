@@ -1,18 +1,28 @@
-;; 1
-(+ (reduce + (filter #(or (= 0 (mod % 3))(= 0 (mod % 5))) (range 1000))))
+(def any? (complement not-any?))
 
-;; 2 (preferred)
-(reduce + (distinct (into (range 0 1000 3)
-                          (range 0 1000 5))))
+(defn evenly-divisible? [x y]
+  (zero? (rem x y)))
 
-;; 3
+(defn any-evenly-divisible? [x r]
+  (any? (partial evenly-divisible? x) r))
+
+;; 1 
+(time
+ (+ (reduce + (filter #(any-evenly-divisible? % [3 5]) (range 1000)))))
+
+;; 2 (most readable)
+(time
+ (reduce + (distinct (into (range 0 1000 3)
+                           (range 0 1000 5)))))
+
+;; 3 (fastest)
 (defn foo []
   (loop [sum 0
          c 0]
     (if (= c 1000)
       sum
-      (if (or (= 0 (mod c 3)) (= 0 (mod c 5)))
+      (if (any-evenly-divisible? c [3 5])
         (recur (+ sum c)(inc c))
         (recur sum (inc c))))))
 
-(foo)
+(time (foo))
