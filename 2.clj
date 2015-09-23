@@ -1,3 +1,5 @@
+
+
 (loop [one 1
        two 2
        sum 0]
@@ -5,7 +7,4 @@
     sum
     (if (even? two)
       (recur two (+ one two) (+ sum two))
-      (recur two (+ one two) sum)
-    )
-  )
-)
+      (recur two (+ one two) sum))))

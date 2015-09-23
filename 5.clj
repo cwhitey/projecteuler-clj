@@ -1,8 +1,25 @@
-;2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+(defn evenly-divisible? [x y]
+  (= 0 (mod x y)))
 
-;What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+(defn all-evenly-divisible? [x r]
+  (every? (partial evenly-divisible? x) r))
 
-(first(filter #(and (not (nil? (second %))) (= 19 (count (second %)))) (for [x (range 2520 100000000)
-      :let[y (filter #(= 0 (mod x %)) (range 1 21))]]
-       [x y]))
-)
+(all-evenly-divisible? 6000 '(1 2 3 4 5 6))
+
+;; unfortunately a little slow (4.662 secs)
+(with-out-str (time (first (for [x     (range 20 300000000 20)
+                                 :when (all-evenly-divisible? x (range 1 21))]
+                             x))))
+
+
+;; see: http://www.codeproject.com/Articles/239829/Project-Euler-Problem-sharp
+;; to speed up
+(defn gcd [x y]
+  (if (zero? y)
+    x
+    (gcd x (% x y))))
+
+(defn lcd [x y]
+  (if (or (zero? x) (zero? y))
+    0
+    (* (/ x (gcd x y)) j)))
