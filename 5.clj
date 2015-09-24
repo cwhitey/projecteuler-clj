@@ -24,5 +24,5 @@
     0
     (* (/ x (gcd x y)) y)))
 
-(with-out-str (time
-               (reduce lcd (range 1 21))))
+(time
+ (reduce lcd (range 1 21)))
