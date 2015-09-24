@@ -2,13 +2,13 @@
 
 ;What is the sum of the digits of the number 2^1000?
 
-
-;(use 'clojure.contrib.math)
-(defn exp [x n]
-  (reduce * (repeat n x)))
+(defn exp
+  "Use bigint to avoid an integer overflow!"
+  [x n]
+  (reduce * (repeat n (bigint x))))
 
 (defn sum-exp-digits [x n]
   (reduce + (for [d (str (exp x n))]
               (read-string (str d)))))
 
-(sum-exp-digits 2 10)
+(sum-exp-digits 2 1000)
