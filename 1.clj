@@ -16,13 +16,17 @@
                            (range 0 1000 5)))))
 
 ;; 3 (fastest)
-(defn foo []
+(defn problem1 [roof]
   (loop [sum 0
          c 0]
-    (if (= c 1000)
+    (if (= c roof)
       sum
       (if (any-evenly-divisible? c [3 5])
         (recur (+ sum c)(inc c))
         (recur sum (inc c))))))
 
-(time (foo))
+(time (problem1 1000))
+(time (problem1 2000000))
+
+
+(problem1 10)
