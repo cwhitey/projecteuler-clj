@@ -1,4 +1,4 @@
-;The following iterative sequence is defined for the set of positive integers:
+ ;The following iterative sequence is defined for the set of positive integers:
 
 ;n → n/2 (n is even)
 ;n → 3n + 1 (n is odd)
@@ -12,3 +12,28 @@
 
 ;NOTE: Once the chain starts the terms are allowed to go above one million.
 
+(defn collatz [n]
+  (loop [x n
+         acc []]
+    (let [acc (conj acc x)]
+      (if (<= x 1)
+        acc
+        (if (even? x)
+          (recur (/ x 2) acc)
+          (recur (inc (* 3 x)) acc))))))
+
+(defn all-collatz []
+  (for [x (range)]
+    [x (collatz x)]))
+
+(defn biggest-collatz [coll]
+  (reduce #(if (>= (count (second %1))
+                   (count (second %2)))
+             %1
+             %2)
+          coll))
+
+(defn problem14 []
+  (first (biggest-collatz (take 999999 (all-collatz)))))
+
+(problem14)
