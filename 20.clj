@@ -5,3 +5,10 @@
 
 ;Find the sum of the digits in the number 100!
 
+(defn fac [number]
+  (reduce #(bigint (* %1 %2)) (range 1 (inc number))))
+
+(defn sum-digits [number]
+  (reduce + (map read-string (map str (str number)))))
+
+(sum-digits (fac 100))
